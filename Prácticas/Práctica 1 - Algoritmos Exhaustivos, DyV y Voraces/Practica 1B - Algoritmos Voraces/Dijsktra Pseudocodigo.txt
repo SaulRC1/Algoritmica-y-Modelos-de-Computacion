@@ -1,0 +1,54 @@
+funcion Dijkstra(Nodo inicio) return Rutas
+
+        Diccionario Rutas = nuevo Diccionario()
+
+        Diccionario Visitados := nuevo Diccionario()
+
+        Para i := 0 Hasta numero_de_Nodos
+            poner_en_Visitados(obtenerNodo(i), falso)
+        fPara
+
+        Diccionario Distancias := nuevo Diccionario()
+
+        Para i := 0 Hasta numero_de_Nodos
+            aux := obtenerNodo(i)
+            poner_en_Distancias(aux, infinito);
+        fPara
+
+
+        Distancias.reemplaza(inicio, 0)
+        permanente := inicio
+        Visitados.reemplaza(inicio, verdadero)
+        Ruta.añade(inicio)
+        A_visitados.quita(inicio);
+        poner_en_Rutas(permanente, Ruta)
+
+        Mientras A_visitados no sea vacio Hacer 
+            
+            Aristas := permanente.obtenerAristas()
+
+            Para i := 0 Hasta tamañoAristas Hacer
+                distancia_preliminar := Distancias.obtener(permanente);
+                examinar := Aristas.obtener(i).obtenerDestino();
+                Si no_he_visitado(examinar)
+                    distancia_preliminar = distancia_preliminar + Aristas.get(i).getPeso();
+
+                    Si distancia_preliminar < Distancias.obtener(examinar)
+                        Distancias.reemplazar(examinar, distancia_preliminar)
+            
+                        Ruta := Rutas.obtener(permanente)
+             
+                        Ruta.añadir(examinar)
+
+                        poner_en_Rutas(examinar, Ruta)
+                    fSi
+                fSi
+            fPara
+
+            permanente := this.getMenorDistancia(Distancias, Visitados)
+            A_visitados.eliminar(permanente)
+            Visitados.reemplazar(permanente, verdadero)
+        fMientras
+
+        return Rutas
+ffuncion

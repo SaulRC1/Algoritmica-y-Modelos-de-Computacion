@@ -1,0 +1,23 @@
+ESTADOS: a b c d e M
+INICIAL: a
+FINALES: d e
+TRANSICIONES:
+ a '0' a d
+ a '1' a d
+ a 'L' a b
+ b '0' d
+ b '1' b
+ b 'L' b c
+ c '0' M
+ c '1' e
+ c 'L' c d
+ d '0' e
+ d '1' M
+ d 'L' d
+ e '0' M
+ e '1' M
+ e 'L' e
+ M '0' M
+ M '1' M
+ M 'L' M
+FIN

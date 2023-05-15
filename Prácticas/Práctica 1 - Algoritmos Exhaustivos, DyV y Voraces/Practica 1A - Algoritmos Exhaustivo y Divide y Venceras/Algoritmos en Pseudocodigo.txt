@@ -1,0 +1,107 @@
+funcion exhaustivo(T[]: Punto, i: Entero, d: Entero) return solucion
+
+        Trio solucion := Trio(T[0], T[1], T[2]) --> 1 Asignacion + 1 de llamada a Constructor + 3 accesos a estructuras indexadas = 5 OE
+        Trio aux
+	
+
+	Para a1 := i Hasta d Hacer --> 1, 1, 2 (1 Salto)
+		Para a2 := a1 + 1 Hasta d Hacer --> 2, 1, 2 (1 Salto)
+			Para a3 := a2 + 1 Hasta d Hacer --> 2, 1, 2 (1 Salto)
+			
+			aux := Trio(T[a1], T[a2], T[a3]) --> 1 Asignacion + 1 de llamada a Constructor + 3 accesos a estructuras indexadas = 5 OE
+
+			Si aux.distancia < solucion.distancia --> 1 Comparacion
+			
+				solucion := aux --> 1 Asignacion
+
+			fSi
+			
+			fPara
+		fPara
+	fPara
+
+        return solucion
+
+ffuncion
+
+Tiempo Exhaustivo 5000 --> 1603892 ms
+
+
+
+funcion Divide_y_Venceras(Puntos[]: Punto) return solucion
+
+        Si Puntos.longitud <= 6
+            return exhaustivo(Puntos[], 0, Puntos.longitud - 1)
+        Si no Entonces
+            
+            mitad := Puntos.longitud / 2
+            mitad_izq := Punto[mitad]
+            mitad_der := Punto[Puntos.longitud - mitad];
+
+            Para i := 0 Hasta mitad Hacer
+                mitad_izq[i] := Punto(Puntos[i])
+            fPara
+
+            Para i := 0 Hasta (Puntos.longitud - mitad) Hacer
+                mitad_der[i] = new Punto(Puntos[i + mitad])   
+            fPara
+
+            menor_izq := Divide_y_Venceras(mitad_izq[])
+            menor_der := Divide_y_Venceras(mitad_der[])
+            
+            Si menor_izq.distancia < menor_der.distancia
+                solucion := menor_izq
+            Si no Entonces
+                solucion := menor_der
+            fSi
+
+            dmin = solucion.distancia
+
+            Para a := mitad Hasta 0 Hacer
+                Si Puntos[mitad + 1].coordenadaX() - Puntos[a].coordenadaX() > dmin
+                    pararBucle
+                fSi
+            fPara
+
+            Para b := mitad + 1 Hasta (Puntos.longitud - 1) Hacer
+                Si Puntos[b].coordenadaX() - Puntos[mitad].coordenadaX() > dmin
+                    pararBucle
+                fsi
+            fPara
+
+            a := a + 1
+            b := b - 1
+
+            Para c := a Hasta mitad Hacer
+                Para d := mitad + 1 Hasta b Hacer
+                    Para e := d + 1 Hasta b Hacer
+
+                        aux := Trio(Puntos[c], Puntos[d], Puntos[e])
+
+                        Si aux.distancia < solucion.distancia
+                            solucion := aux
+                        fSi
+
+                    fPara
+                fPara
+            fPara
+
+            Para c := b (Hasta mitad + 1) Hacer
+                Para d := a Hasta mitad Hacer
+                    Para e := d + 1 Hasta mitad Hacer
+
+                        aux := Trio(Puntos[c], Puntos[d], Puntos[e])
+
+                        Si aux.distancia < solucion.distancia
+                            solucion := aux
+                        fSi
+
+                    fPara
+                fPara
+            fPara
+
+            return solucion
+
+        fSi
+
+ ffuncion
